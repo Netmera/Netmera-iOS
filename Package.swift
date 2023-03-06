@@ -10,13 +10,16 @@ let package = Package(
     // Products define the executables and libraries a package produces, and make them visible to other packages.
     .library(
       name: "NetmeraIOS",
-      targets: ["NetmeraWrapper"]
+       type: .dynamic,
+      targets: ["NetmeraIOS"]
     ),
     .library(
       name: "NetmeraNotificationServiceExtension",
+       type: .dynamic,
       targets: ["NetmeraNotificationServiceExtensionWrapper"]),
     .library(
       name: "NetmeraNotificationContentExtension",
+       type: .dynamic,
       targets: ["NetmeraNotificationContentExtensionWrapper"]),
   ],
   dependencies: [
@@ -63,15 +66,9 @@ let package = Package(
       path: "Frameworks/NetmeraNotificationContentExtension.xcframework"
     ),
     .target(
-      name: "NetmeraWrapper",
+      name: "NetmeraIOS",
       dependencies: [
-        .target(name: "NetmeraCore", condition: .when(platforms: [.iOS])),
-        .target(name: "NetmeraAdId", condition: .when(platforms: [.iOS])),
-        .target(name: "Netmera", condition: .when(platforms: [.iOS])),
-        .product(name: "AFNetworking", package: "AFNetworking"),
-        .product(name: "FMDB", package: "FMDB"),
-        .product(name: "UICKeyChainStore", package: "MMWormhole"),
-        .product(name: "MMWormhole", package: "MMWormhole"),
+            "UICKeyChainStore","MMWormhole","FMDB","AFNetworking","Netmera","NetmeraAdId","NetmeraCore"
       ],
       linkerSettings: [
         .linkedLibrary("sqlite3"),
